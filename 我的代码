@@ -1,0 +1,90 @@
+#include<stdio.h>
+
+struct out {
+	int win;
+	int ac;
+	int false;
+};
+int aaa[3] = { 0 };
+int bbb[3] = { 0 };
+
+int main() {
+	int n;
+	scanf("%d", &n);
+
+	struct out a, b;
+	a.win = 0, a.ac = 0, a.false = 0;
+	b.win = 0, b.ac = 0, b.false = 0;
+	for (int i = 0; i < n; i++)
+	{
+		char aa, bb;
+		scanf("%c %c", &aa, &bb);
+		if (aa == 'C') {
+			if (bb == 'C')
+				a.ac++, b.ac++;
+			if (bb == 'J') {
+				a.win++, b.false++;
+				aaa[0]++;
+			}
+			if (bb == 'B') {
+				a.false++, b.win++;
+				bbb[2]++;
+			}
+				
+		}
+		if (aa == 'J') {
+			if (bb == 'J')
+				a.ac++, b.ac++;
+			if (bb == 'B') {
+				a.win++, b.false++;
+				aaa[1]++;
+			}
+			if (bb == 'C') {
+				a.false++, b.win++;
+				bbb[0]++;
+			}
+		}
+		if (aa == 'B') {
+			if (bb == 'B')
+				a.ac++, b.ac++;
+			if (bb == 'C') {
+				a.win++, b.false++;
+				aaa[2]++;
+			}
+			if (bb == 'J') {
+				a.false++, b.win++;
+				bbb[1]++;
+			}
+		}
+	}
+
+	char enda, endb;
+	if (aaa[0] > aaa[1]) {
+		if (aaa[0] > aaa[2])
+			enda = 'C';
+		else
+			enda = 'B';
+	}
+	else {
+		if (aaa[1] > aaa[2])
+			enda = 'J';
+		else
+			enda = 'B';
+	}
+	if (bbb[0] > bbb[1]) {
+		if (bbb[0] > bbb[2])
+			endb = 'C';
+		else
+			endb = 'B';
+	}
+	else {
+		if (bbb[1] > bbb[2])
+			endb = 'J';
+		else
+			endb = 'B';
+	}
+		
+	printf("%d %d %d\n", a.win, a.ac, a.false);
+	printf("%d %d %d\n", b.win, b.ac, b.false);
+	printf("%c %c\n", enda, endb);
+}

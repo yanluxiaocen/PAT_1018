@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+char max_gesture(int count[]) {
+    // count[0] = B, count[1] = C, count[2] = J
+    int max = count[0];
+    char gest[] = {'B', 'C', 'J'};
+    int idx = 0;
+    for (int i = 1; i < 3; i++) {
+        if (count[i] > max) {
+            max = count[i];
+            idx = i;
+        }
+    }
+    return gest[idx];
+}
+
+int main() {
+    int N;
+    scanf("%d", &N);
+
+    int winA = 0, loseA = 0, drawA = 0;
+    int gestA[3] = {0};  // B, C, J
+    int gestB[3] = {0};
+
+    for (int i = 0; i < N; i++) {
+        char a, b;
+        scanf(" %c %c", &a, &b);
+
+        if (a == b) {
+            drawA++;
+        } else if ((a == 'C' && b == 'J') ||
+                   (a == 'J' && b == 'B') ||
+                   (a == 'B' && b == 'C')) {
+            winA++;
+            if (a == 'B') gestA[0]++;
+            if (a == 'C') gestA[1]++;
+            if (a == 'J') gestA[2]++;
+        } else {
+            loseA++;
+            if (b == 'B') gestB[0]++;
+            if (b == 'C') gestB[1]++;
+            if (b == 'J') gestB[2]++;
+        }
+    }
+
+    printf("%d %d %d\n", winA, drawA, loseA);
+    printf("%d %d %d\n", loseA, drawA, winA);  // B 的胜 = A 的负
+    printf("%c %c\n", max_gesture(gestA), max_gesture(gestB));
+
+    return 0;
+}
